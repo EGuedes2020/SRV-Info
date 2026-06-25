@@ -64,9 +64,20 @@ ip_ext=$(curl -s ifconfig.io)
 # nome do servidor
 server=$(hostname)
 
+# temperaturas do servidor (são 8 e aparecerão pela ordem comentada em baixo)
+## CPU - Processador como um todo (média da temperatura dos cores) - Package id 0 
+## CPU - Core 0  
+## CPU - Core 1
+## CPU - Core 2
+## CPU - Core 3
+## Motherboard - zona perto da CPU - temp1
+## Motherboard - zona perto do Chipset - temp2
+## GPU - temp1
+temps=$(sensors | cut -d'(' -f1 | grep -oP '\+\K[0-9.]+.*C')
+
 
 ### função para chamar cada uma das variáveis invocadas uma a uma 
-for var in "$mac_a" "$server" "$logged_user" "$dist" "$desc" "$version" "$codename" "$arch" "$free_mem" "$free_disk" "$ip" "$ip_ext" "$tx" "$rx" "$date_time" "$uptime" "$firewall_ports"
+for var in "$mac_a" "$server" "$logged_user" "$dist" "$desc" "$version" "$codename" "$arch" "$free_mem" "$used_mem" "$free_disk" "$used_disk" "$ip" "$ip_ext" "$tx" "$rx" "$date_time" "$uptime" $temps "$users"
 do
 	# mostrar os valores ao fazer sh neste ficheiro
 	echo $var
